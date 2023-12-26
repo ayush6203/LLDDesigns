@@ -38,7 +38,38 @@ namespace SnakeAndLadderImplementation.Models
 
             while(playersQ.Count > 1)
             {
+                Player currPlayer = playersQ.Dequeue();
+                int diceResult = dice.Roll();
+                int playersNewPosition = diceResult + currPlayer.Position;
 
+                var res = Snakes.FirstOrDefault(s => s.Start == playersNewPosition);
+                if(res != null)
+                {
+                    Console.WriteLine(currPlayer.PlayerName + " bitten by snake");
+                    playersNewPosition = res.End;
+                }
+
+                var res1 = Ladders.FirstOrDefault(s => s.Start == playersNewPosition);
+                if (res != null)
+                {
+                    Console.WriteLine(currPlayer.PlayerName + " got the ladder");
+                    playersNewPosition = res.End;
+                }
+
+                if (playersNewPosition > MaxCell)
+                    playersNewPosition = currPlayer.Position;
+
+                currPlayer.MovePlayer(playersNewPosition);
+                Console.WriteLine(currPlayer.PlayerName + " is now at " + currPlayer.Position);
+
+                if(currPlayer.Position == MaxCell)
+                {
+                    Console.WriteLine(currPlayer.PlayerName + " won the game");
+                    break;
+                }
+
+                playersQ.Enqueue(currPlayer);
+                Console.WriteLine();
             }
 
             Console.WriteLine("Game Over! And the winners are listed below");

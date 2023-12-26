@@ -18,7 +18,7 @@
 
         public void MovePlayer(int postion)
         {
-            this.Position = Position;
+            this.Position = postion;
         }
     }
 }
