@@ -3,7 +3,7 @@ using ChessImplementation.Models;
 
 namespace ChessImplementation.Moves
 {
-    public class VerticalMove : IMove
+    public class InitialVerticalMove : IMove
     {
         public int MovementRange { get; set; }
 

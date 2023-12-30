@@ -19,12 +19,21 @@
             
         }
 
-        public void PlayerEvent(int playerId, int srcX, int srcY, int destX, int destY)
+        public bool PlayerEvent(int playerId, int srcX, int srcY, int destX, int destY)
         {
             if (playerId != playerTurn)
-                return;     // throw exception show msg to user that its not your turn.
+                return false;     // throw exception show msg to user that its not your turn.
 
+            Player currPlayer = players.FirstOrDefault(p => p.Id == playerId);
+            bool isMovementSuccess = board.MovePiece(currPlayer.Color, srcX, srcY, destX, destY);
 
+            if (isMovementSuccess)
+            {
+                Player nextPlayer = players.FirstOrDefault(p => p.Id != playerId);
+                playerTurn = nextPlayer.Id;
+            }
+
+            return isMovementSuccess;
         }
     }
 }

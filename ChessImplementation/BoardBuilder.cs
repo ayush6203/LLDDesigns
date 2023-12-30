@@ -1,5 +1,6 @@
 ﻿using ChessImplementation.Interfaces;
 using ChessImplementation.Models;
+using ChessImplementation.Moves;
 
 namespace ChessImplementation
 {
@@ -25,7 +26,17 @@ namespace ChessImplementation
         public BoardBuilder InitPawns()
         {
             IList<IMove> pawnMoves = new List<IMove>();
-            for(int i = 0; i < 8; i++)
+            VerticalMove verticalMove = new VerticalMove();
+            verticalMove.MovementRange = 1;
+            InitialVerticalMove initialVerticalMove = new InitialVerticalMove();
+            initialVerticalMove.MovementRange = 2;
+            DiagonalMoveWithAttack diagonalMoveWithAttack = new DiagonalMoveWithAttack();
+            diagonalMoveWithAttack.MovementRange = 1;
+
+            pawnMoves.Add(verticalMove);
+            pawnMoves.Add(initialVerticalMove);
+            pawnMoves.Add(diagonalMoveWithAttack);
+            for (int i = 0; i < 8; i++)
             {
                 cells[1, i].Piece = new Piece() { Color = Enums.Color.White, PieceType = Enums.PieceType.Pawn, Moves = pawnMoves };
                 cells[6, i].Piece = new Piece() { Color = Enums.Color.Black, PieceType = Enums.PieceType.Pawn, Moves = pawnMoves };
@@ -36,6 +47,13 @@ namespace ChessImplementation
         public BoardBuilder InitRooks()
         {
             IList<IMove> rookMoves = new List<IMove>();
+            HorizontalMove horizontalMove = new HorizontalMove();
+            horizontalMove.MovementRange = 8;
+            VerticalMove verticalMove = new VerticalMove();
+            verticalMove.MovementRange = 8;
+
+            rookMoves.Add(horizontalMove);
+            rookMoves.Add(verticalMove);
             cells[0, 0].Piece = new Piece() { Color = Enums.Color.White, PieceType = Enums.PieceType.Rook, Moves = rookMoves };
             cells[0, 7].Piece = new Piece() { Color = Enums.Color.White, PieceType = Enums.PieceType.Rook, Moves = rookMoves };
             cells[7, 0].Piece = new Piece() { Color = Enums.Color.Black, PieceType = Enums.PieceType.Rook, Moves = rookMoves };
@@ -46,6 +64,10 @@ namespace ChessImplementation
         public BoardBuilder InitBishops()
         {
             IList<IMove> bishopMoves = new List<IMove>();
+            DiagonalMove diagonalMove = new DiagonalMove();
+            diagonalMove.MovementRange = 8;
+
+            bishopMoves.Add(diagonalMove);
             cells[0, 2].Piece = new Piece() { Color = Enums.Color.White, PieceType = Enums.PieceType.Bishop, Moves = bishopMoves };
             cells[0, 5].Piece = new Piece() { Color = Enums.Color.White, PieceType = Enums.PieceType.Bishop, Moves = bishopMoves };
             cells[7, 2].Piece = new Piece() { Color = Enums.Color.Black, PieceType = Enums.PieceType.Bishop, Moves = bishopMoves };
@@ -56,6 +78,16 @@ namespace ChessImplementation
         public BoardBuilder InitKing()
         {
             IList<IMove> kingMoves = new List<IMove>();
+            HorizontalMove horizontalMove = new HorizontalMove();
+            horizontalMove.MovementRange = 1;
+            VerticalMove verticalMove = new VerticalMove();
+            verticalMove.MovementRange = 1;
+            DiagonalMove diagonalMove = new DiagonalMove();
+            diagonalMove.MovementRange = 1;
+
+            kingMoves.Add(horizontalMove);
+            kingMoves.Add(verticalMove);
+            kingMoves.Add(diagonalMove);
             cells[0, 3].Piece = new Piece() { Color = Enums.Color.White, PieceType = Enums.PieceType.King, Moves = kingMoves };
             cells[7, 4].Piece = new Piece() { Color = Enums.Color.Black, PieceType = Enums.PieceType.King, Moves = kingMoves };
             return this;
@@ -64,6 +96,16 @@ namespace ChessImplementation
         public BoardBuilder InitQueen()
         {
             IList<IMove> queenMoves = new List<IMove>();
+            HorizontalMove horizontalMove = new HorizontalMove();
+            horizontalMove.MovementRange = 8;
+            VerticalMove verticalMove = new VerticalMove();
+            verticalMove.MovementRange = 8;
+            DiagonalMove diagonalMove = new DiagonalMove();
+            diagonalMove.MovementRange = 8;
+
+            queenMoves.Add(horizontalMove);
+            queenMoves.Add(verticalMove);
+            queenMoves.Add(diagonalMove);
             cells[0, 4].Piece = new Piece() { Color = Enums.Color.White, PieceType = Enums.PieceType.Queen, Moves = queenMoves };
             cells[7, 3].Piece = new Piece() { Color = Enums.Color.Black, PieceType = Enums.PieceType.Queen, Moves = queenMoves };
             return this;
